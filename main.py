@@ -1,4 +1,4 @@
-
+import sys
 import csv
 
 # List of table names
@@ -9,6 +9,8 @@ table_columns = [[None for x in range(10)] for y in range (10)]
 
 # Table data
 table_data = []
+
+query = sys.argv[1]
 
 def load_metadata() :
     '''
@@ -43,21 +45,16 @@ def load_data() :
         for row in rows:
             table.append(row)
         table_data.append(table)
-    print(table_data)
 
 
-def input_query() :
-    '''
-    take input of query
-    '''
-
-def query() :
+def execute_query() :
     '''
     execute query
     '''
 
 load_metadata()
 load_data()
+print (query)
 # print("table_names" + str(table_names)+"\n\n")
 # print("table_names Columns: "+str(table_columns)+"\n\n")
 
