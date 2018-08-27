@@ -1,5 +1,6 @@
 import sys
 import csv
+import sqlparse
 
 # List of table names
 table_names = []
@@ -11,6 +12,10 @@ table_columns = [[None for x in range(10)] for y in range (10)]
 table_data = []
 
 query = sys.argv[1]
+
+if len(sys.argv) > 2:
+    print('ERROR: Please enter one query at a time.')
+    quit()
 
 def load_metadata() :
     '''
@@ -46,15 +51,42 @@ def load_data() :
             table.append(row)
         table_data.append(table)
 
+def process_query():
+    '''
+    read query and understand it.
+    '''
+    x = sqlparse.parse(query)
+    q = x[0]
+    q_length = len(q.tokens)
 
-def execute_query() :
+    # Handle error cases later on
+
+    # q[0] will always be select
+    # q[1] will always be a whitespace
+    # q[2] will be comma-separated list of columns to select
+    # q[3] will always be a whitespace
+    # q[4] will always be from
+    # q[5] will always be a whitespace
+    # q[6] will always be the table to choose from
+    # q[n-1] will always be a semi-colon
+
+    if ((str(q[q_length-1]) == ";" and q_length == 8) \
+    or (str(q[q_length-1]) != ";" and q_length == 7)) \
+    and 1:
+    # Instead of 1, check that token q.tokens[2] is either a variable or a varable list.
+        query1(q_length, q)
+
+def query1(q_length, q) :
     '''
-    execute query
+    Queries of the form:
+    SELECT <column list>
+    FROM <table list>;
     '''
+    # print(q.tokens[2].name)
+    pass
+
 
 load_metadata()
 load_data()
-print (query)
-# print("table_names" + str(table_names)+"\n\n")
-# print("table_names Columns: "+str(table_columns)+"\n\n")
+process_query()
 
